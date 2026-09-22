@@ -112,6 +112,100 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans transition-colors duration-200">
 
+  <!-- Instructions Modal (Auto-opens on first entry) -->
+  <div id="instructions-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="theme-surface border-2 theme-border rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative flex flex-col gap-5">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b theme-border pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl theme-accent-btn flex items-center justify-center text-white shadow-md">
+            <i data-lucide="compass" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-black text-white leading-tight">Welcome &amp; Instructions</h2>
+            <p class="text-xs sm:text-sm text-slate-400 font-semibold">Quick 4-step setup before starting</p>
+          </div>
+        </div>
+        <button onclick="closeInstructionsModal()" class="w-9 h-9 rounded-xl border theme-border flex items-center justify-center text-slate-300 hover:text-white transition" aria-label="Close instructions">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Instruction Steps -->
+      <div class="space-y-3.5">
+        <!-- Step 1 -->
+        <div class="flex items-start gap-3.5 p-3.5 rounded-2xl theme-card border theme-border">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-base flex items-center justify-center shrink-0">
+            1
+          </div>
+          <div class="flex-1">
+            <h3 class="font-extrabold text-white text-base flex items-center gap-1.5">
+              Enter your API Key
+              <i data-lucide="key" class="w-4 h-4 text-emerald-400"></i>
+            </h3>
+            <p class="text-sm text-slate-300 leading-snug">Click the <strong>AI Key</strong> button at the top-right corner to plug in your Gemini key.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex items-start gap-3.5 p-3.5 rounded-2xl theme-card border theme-border">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-base flex items-center justify-center shrink-0">
+            2
+          </div>
+          <div class="flex-1">
+            <h3 class="font-extrabold text-white text-base flex items-center gap-1.5">
+              Select your coding language
+              <i data-lucide="code-2" class="w-4 h-4 text-emerald-400"></i>
+            </h3>
+            <p class="text-sm text-slate-300 leading-snug">Choose from C, C++, Java, Python, Web (HTML/CSS), or leave it on Auto Detect.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex items-start gap-3.5 p-3.5 rounded-2xl theme-card border theme-border">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-base flex items-center justify-center shrink-0">
+            3
+          </div>
+          <div class="flex-1">
+            <h3 class="font-extrabold text-white text-base flex items-center gap-1.5">
+              Adjust your text size
+              <span class="text-xs px-1.5 py-0.5 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-500/30">A- / A+</span>
+            </h3>
+            <p class="text-sm text-slate-300 leading-snug">Use the top zoom buttons to adapt the font size for your screen and comfort.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flex items-start gap-3.5 p-3.5 rounded-2xl theme-card border theme-border">
+          <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 font-black text-base flex items-center justify-center shrink-0">
+            4
+          </div>
+          <div class="flex-1">
+            <h3 class="font-extrabold text-white text-base flex items-center gap-1.5">
+              Wait for few time 😅
+              <i data-lucide="clock" class="w-4 h-4 text-amber-400"></i>
+            </h3>
+            <p class="text-sm text-slate-300 leading-snug">Once you submit your problem, give the AI a moment to craft the breakdown and stream the code!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-between pt-2 border-t theme-border">
+        <label class="flex items-center gap-2 cursor-pointer text-xs sm:text-sm text-slate-300 select-none">
+          <input type="checkbox" id="dont-show-instructions" class="w-4 h-4 rounded border-slate-600 accent-emerald-500 cursor-pointer">
+          <span>Don't show again</span>
+        </label>
+
+        <button onclick="closeInstructionsModal()" class="h-12 px-6 rounded-xl theme-accent-btn text-white font-black text-sm sm:text-base shadow-lg active:scale-95 transition">
+          Got It, Let's Code!
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl bg-emerald-600 text-white font-bold text-base shadow-2xl transition-all duration-300 pointer-events-none opacity-0 translate-y-[-10px] flex items-center gap-2">
     <i data-lucide="check-circle" class="w-5 h-5"></i>
@@ -131,8 +225,14 @@
         </div>
       </div>
 
-      <!-- Header Tools: Font Zoom (A-/A+), Theme, Settings -->
+      <!-- Header Tools: Instructions, Font Zoom (A-/A+), Theme, Settings -->
       <div class="flex items-center gap-1.5 sm:gap-2.5">
+        
+        <!-- Instructions / Help Button -->
+        <button onclick="openInstructionsModal()" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border theme-border theme-card flex items-center justify-center text-emerald-400 active:scale-90 transition shadow" title="View Instructions" aria-label="View instructions">
+          <i data-lucide="help-circle" class="w-5 h-5"></i>
+        </button>
+
         <!-- Font Zoom Out (A-) -->
         <button onclick="adjustFontSize(-1)" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border theme-border theme-card flex items-center justify-center font-black text-base text-white active:scale-90 transition shadow" title="Decrease font size" aria-label="Decrease text size">
           A-
@@ -340,6 +440,7 @@ Awaiting your question!
     </section>
   </main>
 
+  <!-- API Key Modal -->
   <div id="api-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="theme-surface border-2 theme-border rounded-3xl max-w-md w-full p-5 sm:p-7 shadow-2xl relative flex flex-col gap-4">
       <div class="flex items-center justify-between">
@@ -420,7 +521,31 @@ Awaiting your question!
       // Initial responsive view check
       handleResponsiveLayout();
       window.addEventListener('resize', handleResponsiveLayout);
+
+      // Auto-trigger Instructions Modal on first user visit
+      const hideInstructions = localStorage.getItem('icanhelpyou_hide_instructions');
+      if (hideInstructions !== 'true') {
+        openInstructionsModal();
+      }
     });
+
+    // Instructions Modal Controls
+    function openInstructionsModal() {
+      const modal = document.getElementById('instructions-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeInstructionsModal() {
+      const modal = document.getElementById('instructions-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+
+      const checkbox = document.getElementById('dont-show-instructions');
+      if (checkbox && checkbox.checked) {
+        localStorage.setItem('icanhelpyou_hide_instructions', 'true');
+      }
+    }
 
     // Font Zoom Controls (A- / A+)
     function adjustFontSize(delta) {
@@ -483,12 +608,10 @@ Awaiting your question!
       const workspacePanel = document.getElementById('panel-workspace');
 
       if (!isMobile) {
-        // Desktop / Laptop: always show both panels side-by-side
         inputPanel.classList.remove('hidden');
         workspacePanel.classList.remove('hidden');
         workspacePanel.classList.add('flex');
       } else {
-        // Apply mobile selected view
         showMobileSection(state.mobileSection);
       }
     }
@@ -658,7 +781,6 @@ Awaiting your question!
       type();
     }
 
-    // High quality offline fallback generator if offline or rate-limited
     function generateSmartOfflineResponse(q, lang) {
       const isDigits = q.toLowerCase().includes('digit') || q.toLowerCase().includes('sum');
       const isHtml = lang === 'html' || lang === 'css' || q.toLowerCase().includes('card') || q.toLowerCase().includes('html');
@@ -734,7 +856,6 @@ Awaiting your question!
         n //= 10         # remove last digit
     return total
 
-# Verification test case
 test_value = 1234
 result = solve(test_value)
 print(f"Sum of digits for {test_value} = {result}")`;
@@ -746,8 +867,8 @@ int solve(int n) {
     int sum = 0;
     n = std::abs(n);
     while (n > 0) {
-        sum += n % 10; // Extract last digit
-        n /= 10;       // Discard last digit
+        sum += n % 10;
+        n /= 10;
     }
     return sum;
 }
@@ -801,7 +922,6 @@ int main() {
       return { explanation, code };
     }
 
-    // Main AI Request Pipeline
     async function requestAiHelp(cmd = null) {
       const q = document.getElementById('problem-input').value.trim();
       const errBox = document.getElementById('error-alert');
@@ -825,7 +945,6 @@ int main() {
       spinner.classList.remove('hidden');
       spinner.classList.add('flex');
 
-      // On mobile devices, automatically jump to the Code tab so the student instantly sees results
       if (window.innerWidth < 1024) {
         showMobileSection('code');
       } else {
@@ -902,10 +1021,8 @@ CRITICAL FORMAT REQUIREMENT:
       spinner.classList.add('hidden');
       spinner.classList.remove('flex');
 
-      // Populate tutor guide
       document.getElementById('tutor-content').textContent = finalExplanation;
 
-      // Type code with animated feedback
       typeCodeIntoStudio(finalCode, () => {
         const selectedLang = document.getElementById('language-select').value;
         const frame = document.getElementById('web-preview-frame');
